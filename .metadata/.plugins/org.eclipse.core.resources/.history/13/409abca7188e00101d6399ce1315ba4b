@@ -1,0 +1,9 @@
+package DashBoard;
+
+public class BoardReadTestMain {
+
+	public static void main(String[] args) {
+		BoardRead br = new BoardRead();
+	}
+
+}
