@@ -1,3 +1,2 @@
-2025/09/10-10:43:26.242 7d24 Reusing MANIFEST C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2025/09/10-10:43:26.247 7d24 Recovering log #3
-2025/09/10-10:43:26.249 7d24 Reusing old log C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2025/09/10-10:25:17.948 6fcc Creating DB C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2025/09/10-10:25:17.965 6fcc Reusing MANIFEST C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
