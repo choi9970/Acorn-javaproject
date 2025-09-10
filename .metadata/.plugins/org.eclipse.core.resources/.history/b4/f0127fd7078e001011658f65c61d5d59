@@ -1,0 +1,45 @@
+package DashBoard;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args) {
+		Board b=new Board(enterNumber(), null, null, null, null);
+	}
+	public static int enterNumber() {
+		int firstCellLastLine = null; // 마지막 줄의 첫번째 셀 저장용
+		try {
+			//문자기반의 기반 스트림
+			FileReader fr = new FileReader("DataBase/data.csv");
+			//보조스트림, 편리함제공
+			BufferedReader br=new BufferedReader(fr);
+			
+			ArrayList<Board> list=new ArrayList<>();
+			
+			while (true) {
+				String line= br.readLine();
+				if (line==null) {
+					break;
+				}
+				System.out.println(line);
+				String[] parts=line.split(",");
+	
+	            firstCellLastLine = (int)parts[0];
+			}
+			//System.out.println(firstCellLastLine);
+			firstCellLastLine=firstCellLastLine+1;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return firstCellLastLine;
+	}
+
+}

@@ -1,0 +1,78 @@
+package DashBoard;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Board> list = new ArrayList<>();
+        
+        System.out.print("글쓰기 제목:");
+        String title=sc.nextLine();
+        System.out.print("글 내용:");
+        String content=sc.nextLine();
+        System.out.print("글쓴이:");
+        String writer=sc.nextLine();
+        Date regDate=nowDate();
+        
+        //list.add(new Board(enterNumber(), "test", "test", "test",nowDate()));
+
+        // 파일쓰기 (append 모드)
+        try {
+        	FileWriter fw = new FileWriter("DataBase/data.csv", true);
+        
+             PrintWriter pw = new PrintWriter(fw);
+
+            for (int i = 0; i < list.size(); i++) {
+            	pw.println(list.get(i).toCSV());
+            }
+            
+            pw.close(); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Date nowDate() {
+    	return new Date(); // 현재 시간 Date 객체 그대로 반환
+	}
+
+	public static int enterNumber() {
+        int firstCellLastLine = 0;
+
+        try {
+        	FileReader fr = new FileReader("DataBase/data.csv");
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                firstCellLastLine = Integer.parseInt(parts[0]);
+            }
+            return firstCellLastLine + 1;
+            
+            
+
+        } catch (FileNotFoundException e) {
+            return 1; // 파일 없으면 첫 번째 글 번호는 1
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return firstCellLastLine + 1;
+    }
+}
+
