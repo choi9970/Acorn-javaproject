@@ -1,11 +1,5 @@
-!SESSION 2025-09-10 10:25:00.153 -----------------------------------------------
-eclipse.buildId=4.36.0.20250605-1300
-java.version=21.0.7
-java.vendor=Eclipse Adoptium
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
-Framework arguments:  -product org.eclipse.epp.package.java.product
-Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< Updated upstream
 !ENTRY ch.qos.logback.classic 1 0 2025-09-10 10:25:02.131
 !MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
 
@@ -38,3 +32,7 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+=======
+!ENTRY org.eclipse.core.resources 2 10035 2025-09-11 14:09:25.313
+!MESSAGE The workspace will exit with unsaved changes in this session.
+>>>>>>> Stashed changes
