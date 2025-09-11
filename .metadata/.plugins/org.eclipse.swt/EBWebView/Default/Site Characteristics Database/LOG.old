@@ -1,5 +1,3 @@
-2025/09/10-10:48:55.832 5e0 Log #3: 1 ops saved to Table #4 OK
-2025/09/10-10:48:55.837 5e0 Archiving C:\Users\user\Desktop\test\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000003.log: OK
-2025/09/10-10:48:55.837 5e0 Table #4: 1 entries OK
-2025/09/10-10:48:55.838 5e0 Archiving C:\Users\user\Desktop\test\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001: OK
-2025/09/10-10:48:55.845 5e0 **** Repaired leveldb C:\Users\user\Desktop\test\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database; recovered 1 files; 130 bytes. Some data may have been lost. ****
+2025/09/11-10:02:13.683 3da8 Reusing MANIFEST C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001
+2025/09/11-10:02:13.688 3da8 Recovering log #3
+2025/09/11-10:02:13.688 3da8 Reusing old log C:\Users\user\Desktop\Acorn-javaproject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000003.log 

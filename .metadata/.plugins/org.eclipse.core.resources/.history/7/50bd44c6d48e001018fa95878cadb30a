@@ -1,0 +1,95 @@
+package DashBoard;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.List;
+
+public class BoardManager {
+	Scanner sc = new Scanner(System.in);
+	List<Board> list = new ArrayList<Board>();
+	public void postCreate(String writer, String title, String content) {
+			list .clear();
+	        Date regDate=nowDate();
+	        //public Board(int id, String title, String content, String writer, Date regDate) {
+	        list.add(new Board(enterNumber(), title, content, writer,nowDate()));
+	     // 파일쓰기 (append 모드)
+	        try {
+	        	File folder = new File("DataBase");
+	        	
+	        	if (!folder.exists()) {
+	        	    folder.mkdir(); // 폴더 생성
+	        	}
+	        	FileWriter fw = new FileWriter("DataBase/data.csv", true);
+	        
+	             PrintWriter pw = new PrintWriter(fw);
+
+	            for (int i = 0; i < list.size(); i++) {
+	            	pw.println(list.get(i).toCSV());
+	            }
+	            
+	            pw.close(); 
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
+	}
+	
+	public void postDelete() {
+		System.out.print("삭제할 번호:");
+		int deleteNum = Integer.parseInt(sc.nextLine());
+        list .clear();
+        List<Board>list =FileManager.loadData2("DataBase/data.csv");
+		boolean removed = list.removeIf(board -> board.getId() == deleteNum);
+        if (removed) {
+            System.out.println("게시글 " + deleteNum + "번이 삭제되었습니다.");
+            // 삭제 후 CSV 파일 저장
+            FileManager.saveData("DataBase/data.csv",list);
+        } else {
+            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+        }
+
+		
+	}
+	
+	public static Date nowDate() {
+    	return new Date(); // 현재 시간 Date 객체 그대로 반환
+	}
+
+	public static int enterNumber() {
+        int firstCellLastLine = 0;
+
+        try {
+        	FileReader fr = new FileReader("DataBase/data.csv");
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                firstCellLastLine = Integer.parseInt(parts[0]);
+            }
+            return firstCellLastLine + 1;
+            
+            
+
+        } catch (FileNotFoundException e) {
+            return 1; // 파일 없으면 첫 번째 글 번호는 1
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return firstCellLastLine + 1;
+    }
+	
+}

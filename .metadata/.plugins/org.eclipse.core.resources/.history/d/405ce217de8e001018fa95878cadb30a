@@ -1,0 +1,46 @@
+package DashBoard;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Board {
+    private int id;
+    private String title;
+    private String content;
+    private String writer;
+    private Date  regDate;
+
+    public Board(int id, String title, String content, String writer, Date regDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.regDate = regDate;
+    }
+
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public String getContent() { return content; }
+    public String getWriter() { return writer; }
+    public Date getRegDate() { return regDate; }
+
+    public void setTitle(String title) { this.title = title; }
+    public void setContent(String content) { this.content = content; }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return String.format(
+            "| %-4d | %-20s | %-30s | %-15s | %-19s |",
+            id,           // 번호 (4칸, 오른쪽 빈칸)
+            title,        // 제목 (20칸)
+            content,      // 내용 (30칸)
+            writer,       // 글쓴이 (15칸)
+            sdf.format(regDate) // 등록일 (19칸)
+        );
+    }
+    
+    public String toCSV() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return id + "," + title + "," + content + "," + writer + "," + sdf.format(regDate);
+    }
+}

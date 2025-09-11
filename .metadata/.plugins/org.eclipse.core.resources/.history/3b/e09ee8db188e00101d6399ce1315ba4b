@@ -1,0 +1,13 @@
+package DashBoard;
+
+import java.io.IOException;
+
+public class BoardReadTestMain {
+
+	public static void main(String[] args) throws IOException {
+		BoardRead br = new BoardRead();
+		
+		br.loadDummyData("src/DataBase/data.csv");
+	}
+
+}

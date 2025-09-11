@@ -1,0 +1,67 @@
+package DashBoard;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		
+		//2. 게시글 조회 테스트
+		BoardRead br = new BoardRead();
+		BoardManager bm = new BoardManager();
+		br.loadData("DataBase/data.csv");
+		
+		while(true) {
+			System.out.println("------------Main Menu-------------");
+			System.out.println("메뉴를 선택해주세요.");
+			System.out.println("1. 게시글 작성");
+			System.out.println("2. 게시글 조회");
+			System.out.println("3. 게시글 수정");
+			System.out.println("4. 게시글 삭제");
+			System.out.println("5. 종료");
+			System.out.print("[번호 입력] : ");
+			int choice = sc.nextInt();
+			
+			switch(choice) {
+			//1. 게시글 작성 (정문)
+			case 1:
+				bm.postCreate();
+				br.postShowAll();		// 전체 글 목록 리스트 표시
+				break;
+				
+			//2. 게시글 조회 (혜린)
+			case 2:
+				br.postShowChoice();
+				break;
+				
+			//3. 게시글 수정 (태민)
+			case 3:
+				
+				br.postShowAll();		// 전체 글 목록 리스트 표시
+				break;
+				
+			//4. 게시글 삭제 (동규)
+			case 4:
+				//삭제 메서드 호출
+				//bm.postDelete();
+				br.postShowAll();		// 전체 글 목록 리스트 표시
+				break;
+				
+			//5. 프로그램 종료
+			case 5:
+				System.out.println("종료합니다.");
+				sc.close();
+				return;
+			
+			default:
+				System.out.println("다시 선택해주세요.\n");
+			}
+			
+		}
+		
+
+	}
+
+}
