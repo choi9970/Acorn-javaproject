@@ -1,0 +1,40 @@
+package DashBoard;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Board {
+    private int id;
+    private String title;
+    private String content;
+    private String writer;
+    private Date  regDate;
+
+    public Board(int id, String title, String content, String writer, Date regDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.regDate = regDate;
+    }
+
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public String getContent() { return content; }
+    public String getWriter() { return writer; }
+    public Date getRegDate() { return regDate; }
+
+    public void setTitle(String title) { this.title = title; }
+    public void setContent(String content) { this.content = content; }
+
+    @Override
+    public String toString() {
+        //return id + " | " + title + " | " + writer + " | " + regDate;
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return "|\t" +id + "\t|\t" + title + "\t|\t" + content + "\t|\t" + writer + "\t|\t" + sdf.format(regDate)+ "\t|";
+    }
+    
+    public String toCSV() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return id + "," + title + "," + content + "," + writer + "," + sdf.format(regDate);
+    }
+}

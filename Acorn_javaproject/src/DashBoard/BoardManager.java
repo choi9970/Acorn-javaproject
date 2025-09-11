@@ -1,97 +1,112 @@
 package DashBoard;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class BoardManager {
-	Scanner sc = new Scanner(System.in);
-	public void postCreate() {
-		 ArrayList<Board> list = new ArrayList<>();
-		 System.out.print("글쓰기 제목:");
-	        String title=sc.nextLine();
-	        System.out.print("글 내용:");
-	        String content=sc.nextLine();
-	        System.out.print("글쓴이:");
-	        String writer=sc.nextLine();
-	        Date regDate=nowDate();
-	        //public Board(int id, String title, String content, String writer, Date regDate) {
-	        list.add(new Board(enterNumber(), title, content, writer,nowDate()));
-	     // 파일쓰기 (append 모드)
-	        try {
-	        	File folder = new File("DataBase");
-	        	
-	        	if (!folder.exists()) {
-	        	    folder.mkdir(); // 폴더 생성
-	        	}
-	        	FileWriter fw = new FileWriter("DataBase/data.csv", true);
-	        
-	             PrintWriter pw = new PrintWriter(fw);
+    Scanner sc = new Scanner(System.in);
+    List<Board> list = new ArrayList<>();
 
-	            for (int i = 0; i < list.size(); i++) {
-	            	pw.println(list.get(i).toCSV());
-	            }
-	            
-	            pw.close(); 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-		
-	}
-	
-	public void postDelete(List<Board> boardList, int id, String fileName) {
-		boolean removed = boardList.removeIf(board -> board.getId() == id);   //id값 비교 후 삭제
+    // 게시글 작성
+    public void postCreate(String writer, String title, String content) {
+        list = FileManager.loadData(); // 기존 데이터 불러오기
+        Board board = new Board(enterNumber(), title, content, writer, nowDate());
+        list.add(board);
+        FileManager.saveData(list); // 파일 저장
+    }
 
+    // 게시글 조회 메뉴
+    public void postShowChoice() throws IOException {
+        System.out.println("\n┌───────────────────────────────┐");
+        System.out.println("│                         📖 게시글 조회 메뉴                          │");
+        System.out.println("├───────────────────────────────┤");
+        System.out.println("│                          [1] 전체 목록 조회                             │");
+        System.out.println("│                          [2] 게시글 상세보기                          │");
+        System.out.println("└───────────────────────────────┘");
+        System.out.print("👉 번호를 입력하세요: ");
+        String strListChoice = sc.next();
+
+        try {
+            int intListChoice = Integer.parseInt(strListChoice);
+
+            if (intListChoice == 1) {
+                System.out.println("\n📋 전체 게시글 목록\n");
+                postShowAll();
+
+            } else if (intListChoice == 2) {
+                System.out.println("\n🔍 게시글 상세 조회");
+                postShowAll();
+                System.out.print("👉 조회할 게시글 번호 입력: ");
+                int num = sc.nextInt();
+                postShowDetail(num);
+            } else {
+                System.out.println("\n\n⚠ 1, 2번만 선택할 수 있습니다. 다시 선택해주세요.\n");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("\n⚠️ 숫자가 아닌 값을 입력했습니다.");
+        }
+    }
+
+    // 전체 목록 조회
+    public int postShowAll() {
+        list = FileManager.loadData();
+        if (list.isEmpty()) {
+            System.out.println("\n\n⚠ 등록된 게시글이 없습니다.\n");
+            return 0;
+        }
+        
+        Board.printHeader();   // 헤더 출력
+        for (Board board : list) {
+            System.out.println(board);
+        }
+        Board.printFooter();   // 푸터 출력
+        return 1;
+    }
+
+    // 상세보기
+    public void postShowDetail(int id) {
+        list = FileManager.loadData();
+        for (Board board : list) {
+            if (board.getId() == id) {
+                System.out.println("\n┌───────────────────────────────┐");
+                System.out.println("│                          📌 게시글 상세보기                          │");
+                System.out.println("└───────────────────────────────┘");
+                System.out.println("글번호: " + board.getId());
+                System.out.println("제목: " + board.getTitle());
+                System.out.println("작성자: " + board.getWriter());
+                System.out.println("작성일: " + board.getRegDate());
+                System.out.println("내용: " + board.getContent());
+                return;
+            }
+        }
+        System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+    }
+
+    // 게시글 삭제
+    public void postDelete(int deleteNum) {
+        list = FileManager.loadData();
+        boolean removed = list.removeIf(board -> board.getId() == deleteNum);
         if (removed) {
-            System.out.println("게시글 " + id + "번이 삭제되었습니다.");
-            // 삭제 후 CSV 파일 저장
-            FileManager.saveData(fileName, boardList);
+            System.out.println("게시글 " + deleteNum + "번이 삭제되었습니다.");
+            System.out.println();
+            FileManager.saveData(list);
         } else {
             System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
         }
-
-		
-	}
-	
-	public static Date nowDate() {
-    	return new Date(); // 현재 시간 Date 객체 그대로 반환
-	}
-
-	public static int enterNumber() {
-        int firstCellLastLine = 0;
-
-        try {
-        	FileReader fr = new FileReader("DataBase/data.csv");
-            BufferedReader br = new BufferedReader(fr);
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                firstCellLastLine = Integer.parseInt(parts[0]);
-            }
-            return firstCellLastLine + 1;
-            
-            
-
-        } catch (FileNotFoundException e) {
-            return 1; // 파일 없으면 첫 번째 글 번호는 1
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return firstCellLastLine + 1;
     }
-	
+
+    // 현재 날짜
+    public static Date nowDate() {
+        return new Date();
+    }
+
+    // 다음 글 번호 가져오기
+    public static int enterNumber() {
+        List<Board> list = FileManager.loadData();
+        if (list.isEmpty()) {
+            return 1;
+        }
+        return list.get(list.size() - 1).getId() + 1;
+    }
 }
