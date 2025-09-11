@@ -72,11 +72,13 @@ public class BoardManager {
                 System.out.println("\n┌───────────────────────────────┐");
                 System.out.println("│                          📌 게시글 상세보기                          │");
                 System.out.println("└───────────────────────────────┘");
-                System.out.println("글번호: " + board.getId());
-                System.out.println("제목: " + board.getTitle());
-                System.out.println("작성자: " + board.getWriter());
-                System.out.println("작성일: " + board.getRegDate());
-                System.out.println("내용: " + board.getContent());
+                System.out.println("│ 글번호 : " + board.getId());
+                System.out.println("│ 제목   : " + board.getTitle());
+                System.out.println("│ 작성자 : " + board.getWriter());
+                System.out.println("│ 작성일 : " + board.sdf.format(board.getRegDate()));
+                System.out.println("├───────────────────────────────┤");
+                System.out.println("│ 내용   : " + board.getContent());
+                System.out.println("└───────────────────────────────┘");
                 return;
             }
         }
@@ -88,11 +90,11 @@ public class BoardManager {
         list = FileManager.loadData();
         boolean removed = list.removeIf(board -> board.getId() == deleteNum);
         if (removed) {
-            System.out.println("게시글 " + deleteNum + "번이 삭제되었습니다.");
+            System.out.println("[ 🗑️게시글 " + deleteNum + "번이 삭제되었습니다. ]");
             System.out.println();
             FileManager.saveData(list);
         } else {
-            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+            System.out.println("[ ❌ 해당 번호의 게시글이 존재하지 않습니다. ]");
         }
     }
 
