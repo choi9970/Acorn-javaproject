@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 /**
  * 작성자 : 이혜린 내용 : 게시글 리스트 조회 및 상세보기
  */
@@ -25,7 +27,7 @@ public class BoardRead {
 			String title = parts[1].trim();
 			String content = parts[2].trim();
 			String writer = parts[3].trim();
-			String regDate = parts[4].trim();
+			Date regDate = parseDate(parts[4].trim());
 
 			Board board = new Board(id, title, content, writer, regDate);
 			boardList.add(board);
@@ -82,4 +84,15 @@ public class BoardRead {
 		}
 		System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
 	}
+    public  Date parseDate(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return sdf.parse(dateStr.trim());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // 변환 실패 시 null 반환
+        }
+    }
+
+	
 }

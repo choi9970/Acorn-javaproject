@@ -10,7 +10,8 @@ public class Main {
 		
 		//2. 게시글 조회 테스트
 		BoardRead br = new BoardRead();
-		br.loadData("src/DataBase/data.csv");
+		BoardManager bm = new BoardManager();
+		br.loadData("DataBase/data.csv");
 		
 		while(true) {
 			System.out.println("------------Main Menu-------------");
@@ -26,6 +27,7 @@ public class Main {
 			switch(choice) {
 			//1. 게시글 작성 (정문)
 			case 1:
+				bm.postCreate();
 				br.postShowAll();		// 전체 글 목록 리스트 표시
 				break;
 				
@@ -43,7 +45,7 @@ public class Main {
 			//4. 게시글 삭제 (동규)
 			case 4:
 				//삭제 메서드 호출
-				
+				//bm.postDelete();
 				br.postShowAll();		// 전체 글 목록 리스트 표시
 				break;
 				
