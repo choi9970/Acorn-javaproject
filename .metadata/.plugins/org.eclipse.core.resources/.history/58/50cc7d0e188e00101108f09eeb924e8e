@@ -1,0 +1,42 @@
+package DashBoard;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Delete {
+	public class CsvReader {
+	    public static ArrayList<Board> readBoardList(String filePath) {
+	        ArrayList<Board> list = new ArrayList<>();
+	        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                String[] data = line.split(",");
+	                if(data.length == 5) {
+	                    int id = Integer.parseInt(data[0]);
+	                    String title = data[1];
+	                    String content = data[2];
+	                    String writer = data[3];
+	                    String regDate = data[4];
+	                    list.add(new Board(id, title, content, writer, regDate));
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        return list;
+	    }
+	}
+	
+	public static void deleteById(int id) {
+		//리스트 읽기
+		ArrayList<Board> list = CsvReader.readBoardList("src/DataBase/data.csv");
+
+		list.removeIf(board -> board.getId() ==id);	//조건문
+	
+		FileWiter.saveList(list, "src/DataBase/data.csv");	//덮어쓰기
+}
+	public static void main(String[] args) {
+        deleteById(3); // id=3 삭제 예시
+        System.out.println("삭제 완료");
+}
+}

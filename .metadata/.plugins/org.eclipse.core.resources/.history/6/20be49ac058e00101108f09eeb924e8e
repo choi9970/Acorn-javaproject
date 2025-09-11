@@ -1,0 +1,7 @@
+
+public class Arr {
+	 public static ArrayList<a> getaList() {
+	        ArrayList<a> list = new ArrayList<>();
+	        list.add(new a("짱구", 20, 30, 40));
+	        return list;
+}

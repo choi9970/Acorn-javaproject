@@ -1,0 +1,11 @@
+package DashBoard;
+
+import java.util.ArrayList;
+
+public class Arr {
+	 public static ArrayList<Board> getBoardList() {
+	        ArrayList<Board> list = new ArrayList<>();
+	        list.add(new Board(2, "짱구", "철수", "훈이","맹구"));
+	        return list;
+}
+}

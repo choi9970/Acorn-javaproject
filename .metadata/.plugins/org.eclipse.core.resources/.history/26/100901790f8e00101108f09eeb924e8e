@@ -1,0 +1,11 @@
+//package DashBoard;
+//
+//import java.util.ArrayList;
+//
+//public class Arr {
+//	 public static ArrayList<Board> getBoardList() {
+//	        ArrayList<Board> list = new ArrayList<>();
+//	        list.add(new Board(1, "A", "b", "c","d"));
+//	        return list;
+//}
+//}

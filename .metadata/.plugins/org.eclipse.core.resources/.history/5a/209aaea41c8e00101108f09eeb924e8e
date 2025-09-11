@@ -1,0 +1,30 @@
+package DashBoard;
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+	public class CsvReader {
+	    public static ArrayList<Board> readBoardList(String filePath) {
+	        ArrayList<Board> list = new ArrayList<>();
+	        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                String[] data = line.split(",");
+	                if(data.length == 5) {
+	                    int id = Integer.parseInt(data[0]);
+	                    String title = data[1];
+	                    String content = data[2];
+	                    String writer = data[3];
+	                    Date regDate = data[4]; 
+	                    list.add(new Board(id, title, content, writer, regDate));
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        return list;
+	    }
+	}
+
