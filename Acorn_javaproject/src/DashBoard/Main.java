@@ -58,8 +58,9 @@ public class Main {
 
                     // 3. 게시글 수정 (태민)
                     case 3:
-                    	bm.postShowAll(); // 전체 글 목록 리스트 표시
-                        break;
+                    	
+                    	bm.postUpdate(sc);
+                    	break;
 
                     // 4. 게시글 삭제 (동규)
                     case 4:
