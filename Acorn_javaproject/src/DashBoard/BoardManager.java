@@ -72,27 +72,90 @@ public class BoardManager {
                 System.out.println("\n┌───────────────────────────────┐");
                 System.out.println("│                          📌 게시글 상세보기                          │");
                 System.out.println("└───────────────────────────────┘");
-                System.out.println("글번호: " + board.getId());
-                System.out.println("제목: " + board.getTitle());
-                System.out.println("작성자: " + board.getWriter());
-                System.out.println("작성일: " + board.getRegDate());
-                System.out.println("내용: " + board.getContent());
+                System.out.println("│ 글번호 : " + board.getId());
+                System.out.println("│ 제목   : " + board.getTitle());
+                System.out.println("│ 작성자 : " + board.getWriter());
+                System.out.println("│ 작성일 : " + board.sdf.format(board.getRegDate()));
+                System.out.println("├───────────────────────────────┤");
+                System.out.println("│ 내용   : " + board.getContent());
+                System.out.println("└───────────────────────────────┘");
                 return;
             }
         }
         System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
     }
+    
+    // 게시글 수정
+    
+    public void postUpdate(Scanner sc) {
+    	List<Board> list = FileManager.loadData();
+    	
+    	 if (list.isEmpty()) {
+             System.out.println("[ 등록된 게시글이 없습니다 ]");
+             return;
+         }
+    	 
+    	 postShowAll();
+    	 
+    	 int updateId;
+    	 
+    	 try {
+    	    	System.out.print("☑ 수정할 게시글 번호 입력: ");
+    	        updateId = Integer.parseInt(sc.nextLine());
+    	    } catch (NumberFormatException e) {
+    	        System.out.println("[ ❌ 숫자를 입력해야 합니다. ]");
+    	        return;
+    	    }
+    	 
+    	 Board boardToUpdate = null;
+    	 for(Board board : list) {
+    		 if(board.getId() == updateId) {
+    			 boardToUpdate = board;
+    			 break;
+    		 }
+    	 }
+    	 
+    	 if (boardToUpdate == null) {
+             System.out.println("[ 해당 번호의 게시글이 존재하지 않습니다 ]");
+             return;
+         }
+    	    
+    	    System.out.println("\n───────────────────────────────");
+    	    System.out.print("📝 새 제목 입력: ");
+    	    String newTitle = sc.nextLine();
 
+    	    System.out.print("💬 새 내용 입력: ");
+    	    String newContent = sc.nextLine();
+    	    System.out.println("\n───────────────────────────────");
+    	    
+    	    // 업데이트
+    	    boardToUpdate.setTitle(newTitle);
+    	    boardToUpdate.setContent(newContent);
+    	    boardToUpdate.setRegDate(new Date());
+
+    	    // 변경 후 저장
+    	    FileManager.saveData(list);
+    	    FileManager.saveData(list);
+    	    System.out.println("[ ✏ 게시글 " + updateId + "번이 수정되었습니다. ]");
+    	    
+    	    System.out.println("\n 📌수정된 게시글 내용");
+    	    System.out.println("\n───────────────────────────────");
+    	    System.out.println("제목:" +  boardToUpdate.getTitle());
+    	    System.out.println("내용:" +  boardToUpdate.getContent());
+    	   
+    }
+    
+   
     // 게시글 삭제
     public void postDelete(int deleteNum) {
         list = FileManager.loadData();
         boolean removed = list.removeIf(board -> board.getId() == deleteNum);
         if (removed) {
-            System.out.println("게시글 " + deleteNum + "번이 삭제되었습니다.");
+            System.out.println("[ 🗑️게시글 " + deleteNum + "번이 삭제되었습니다. ]");
             System.out.println();
             FileManager.saveData(list);
         } else {
-            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+            System.out.println("[ ❌ 해당 번호의 게시글이 존재하지 않습니다. ]");
         }
     }
 

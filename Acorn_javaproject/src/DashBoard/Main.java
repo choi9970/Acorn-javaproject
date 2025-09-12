@@ -1,6 +1,6 @@
 package DashBoard;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -26,7 +26,7 @@ public class Main {
             System.out.println("└───────────────────────────────┘");
             System.out.print("👉 원하시는 메뉴 번호를 입력하세요: ");
 
-            String strChoice = sc.next(); // 숫자열로 받기
+            String strChoice = sc.nextLine(); // 숫자열로 받기
 
             try {
                 int intChoice = Integer.parseInt(strChoice);
@@ -36,15 +36,17 @@ public class Main {
                     case 1:
                     	System.out.println();
                         System.out.println("\n┌───────────────────────────────┐");
-                        System.out.println("│                         📌 게시글 작성                               │");
-                        System.out.println("├───────────────────────────────┤");
-                    	System.out.print(" [1] 글쓴이 : ");
-            	        String writer=sc.next();
-                    	System.out.print(" [2]  제목 : ");
-            	        String title=sc.next();
-            	        System.out.println("───────────────────────────────");
-            	        System.out.print("[3] 내용 : ");
-            	        String content=sc.next();
+                        System.out.println("                           📌 게시글 작성                                  ");
+                        System.out.println("└───────────────────────────────┘");
+                    	System.out.print("  [1] 글쓴이 : ");
+            	        String writer=sc.nextLine();
+                    	System.out.print("  [2]  제목 : ");
+            	        String title=sc.nextLine();
+            	        System.out.println(" ────────────────────────────────");
+            	        System.out.print("  [3] 내용 : ");
+            	        String content=sc.nextLine();
+            	        System.out.println();
+            	        System.out.println("└───────────────────────────────┘");
             	        System.out.println();
             	        
                         bm.postCreate(writer,title,content);
@@ -58,8 +60,9 @@ public class Main {
 
                     // 3. 게시글 수정 (태민)
                     case 3:
-                    	bm.postShowAll(); // 전체 글 목록 리스트 표시
-                        break;
+                    	
+                    	bm.postUpdate(sc);
+                    	break;
 
                     // 4. 게시글 삭제 (동규)
                     case 4:

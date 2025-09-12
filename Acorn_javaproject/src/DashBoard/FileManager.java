@@ -57,6 +57,8 @@ public class FileManager {
         }
         return list;
     }
+    
+    
     public static void initFile() {
         try {
             // 폴더 생성
