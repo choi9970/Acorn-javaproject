@@ -60,21 +60,47 @@ public class Main {
 
                     // 3. 게시글 수정 (태민)
                     case 3:
-                    	
-                    	bm.postUpdate(sc);
+                    	if (bm.postShowAll() == 1) {
+                    		while (true) {
+                    			System.out.println();
+                        		System.out.print("☑ 수정할 게시글 번호 입력: ");
+                        		int updateId = Integer.parseInt(sc.next());
+                        		if (bm.postUpdate(updateId)) {
+                        			System.out.println("\n───────────────────────────────");
+                            	    System.out.print("📝 새 제목 입력: ");
+                            	    String newTitle = sc.next();
+                        
+                            	    System.out.print("💬 새 내용 입력: ");
+                            	    String newContent = sc.next();
+                            	    System.out.println("\n───────────────────────────────");
+                            	    bm.postUpdate(updateId,newTitle,newContent);
+                            	    System.out.println();
+                                    bm.postShowAll(); // 전체 글 목록 리스트 표시
+                            	    break;
+    							}else {
+    								System.out.println("\n\n⚠️ 수정 가능한 아이디가 없습니다.\n");
+    							}
+							}
+						}
+               
                     	break;
 
                     // 4. 게시글 삭제 (동규)
                     case 4:
                     	if (bm.postShowAll() == 1) {
-                    		System.out.println();
-                    		System.out.print("👉 삭제 게시글 번호 : ");
-                    		int deleteNum = Integer.parseInt(sc.next());
-                    		System.out.println();
-                    		
-                    		
-                            bm.postDelete(deleteNum);
-                            bm.postShowAll(); // 전체 글 목록 리스트 표시
+                    		while (true) {
+                    			System.out.println();
+                        		System.out.print("👉 삭제 게시글 번호 : ");
+                        		int deleteNum = Integer.parseInt(sc.next());
+                        		System.out.println();
+                        		if (bm.postDelete(deleteNum)) {
+                        			bm.postShowAll(); // 전체 글 목록 리스트 표시
+									break;
+								}else {
+									System.out.println("\n\n⚠️ 삭제 가능한 아이디가 없습니다.\n");
+									bm.postShowAll();
+								}
+							}
 						}
                         
                         break;
